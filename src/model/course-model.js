@@ -43,4 +43,4 @@ const courseSchema = new mongoose.Schema({
     },
 });
 
-export const Course =  mongoose.connection.models.Course ?? mongoose.connection.model("Course", courseSchema);
+export const Course =  mongoose.models.Course ?? mongoose.model("Course", courseSchema);
