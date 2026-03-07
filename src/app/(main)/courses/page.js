@@ -1,5 +1,3 @@
-"use client"
-import { useState } from "react";
 
 import SearchFilter from "./_components/SearchFilter";
 import SortOptionFilter from "./_components/SortOptionFilter";
@@ -12,28 +10,7 @@ import { getCoursesList } from "@/queries/courses";
 
 const CoursesPage = async () => {
     const courses = await getCoursesList();
-    const [filter, setFilter] = useState({
-        categories: ["development"],
-        price: ["free"],
-        sort: "",
-    });
-
-    //   apply checkbox filter
-    const applyArrayFilter = ({ type, value }) => {
-        const isFilterApplied = filter[type].includes(value);
-
-        if (isFilterApplied) {
-            setFilter((prev) => ({
-                ...prev,
-                [type]: prev[type].filter((v) => v !== value),
-            }));
-        } else {
-            setFilter((prev) => ({
-                ...prev,
-                [type]: [...prev[type], value],
-            }));
-        }
-    };
+    
 
     return (
         <section
@@ -55,12 +32,12 @@ const CoursesPage = async () => {
             </div>
             {/* header ends */}
             {/* active filters */}
-            <ActiveFilter filter={filter} />
+            <ActiveFilter />
             <section className="pb-24 pt-6">
                 <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
                     {/* Filters */}
                     {/* these component can be re use for mobile also */}
-                    <Filter filter={filter} />
+                    <Filter />
                     {/* Course grid */}
                     <div className="lg:col-span-3 grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
                         <Course courses={courses} />

@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
 import { Button } from './ui/button';
+import { formatPrice } from '@/lib/formatPrice';
 
 const Course = ({ courses }) => {
     return (
