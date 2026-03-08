@@ -39,7 +39,19 @@ const courseSchema = new Schema({
             type: Schema.ObjectId,
             ref: "Testimonial"
         }
-    ]
+    ],
+    learning: {
+        required: true,
+        type: [String]
+    },
+    createdOn: {
+        required: true,
+        type: Date
+    },
+    modifiedOn: {
+        required: true,
+        type: Date
+    }
 });
 
 export const Course = mongoose.models.Course ?? mongoose.model("Course", courseSchema);
