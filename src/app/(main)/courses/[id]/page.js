@@ -14,7 +14,7 @@ const SingleCoursePage = async (props) => {
     <>
       <CourseInfo title={course?.title} description={course?.description} thumbnail={course?.thumbnail} />
       <CourseDetails course={course} />
-      <Testimonials course={course} />
+      <Testimonials testimonials={course?.testimonials} />
       <ReleatedCourse course={course} />
     </>
   );

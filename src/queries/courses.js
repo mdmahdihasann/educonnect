@@ -22,7 +22,12 @@ export async function getCoursesDetails(id) {
     .populate({ path: "category", model: Category })
     .populate({ path: "instructor", model: User })
     .populate({ path: "modules", model: Module })
-    .populate({ path: "testimonials", model: Testimonial })
+    .populate({
+      path: "testimonials", model: Testimonial, populate: {
+        path: "userId",
+        model: User
+      }
+    })
     .lean();
   return replaceMongoIdInObject(courseDetails);
 }

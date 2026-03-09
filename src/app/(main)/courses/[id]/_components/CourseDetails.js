@@ -19,17 +19,20 @@ import { NotepadText } from "lucide-react";
 import { FileQuestion } from "lucide-react";
 import { Tv } from "lucide-react";
 import { StickyNote } from "lucide-react";
+import CourseOverview from "./CourseOverview";
+import CourseInstructor from "./CourseInstructor";
+import { formateMyDate } from "@/lib/date";
 
-const CourseDetails = () => {
+const CourseDetails = ({course}) => {
     
     return (
         <section className="py-8 md:py-12 lg:py-24">
             <div className="container">
                 <span className="bg-success px-4 py-0.5 rounded-full text-xs font-medium text-white inline-block">
-                    Development
+                    {course?.category?.title}
                 </span>
                 <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold 2xl:text-5xl mt-3">
-                    Reactive Accelerator
+                    {course?.title}
                 </h3>
                 <p className="mt-3 text-gray-600 text-sm">
                     Master React JS & Next JS
@@ -39,14 +42,14 @@ const CourseDetails = () => {
                     <div className="flex items-center gap-2">
                         <img
                             className="w-[40px] h-[40px] rounded-full"
-                            src="https://avatars.githubusercontent.com/u/3633137?v=4"
-                            alt="sumit saha"
+                            src={course?.instructor?.profilePicture}
+                            alt={course?.instructor?.firstName}
                         />
-                        <p className="font-bold">Tapas Adhikary</p>
+                        <p className="font-bold">{course?.instructor?.firstName} {course?.instructor?.lastName}</p>
                     </div>
                     <div className="flex items-center gap-2 text-sm">
                         <span className="text-success font-semibold">Last Updated: </span>
-                        <span>Feb 22, 2022</span>
+                        <span>{formateMyDate(course?.modifiedOn)}</span>
                     </div>
                 </div>
 
@@ -61,63 +64,7 @@ const CourseDetails = () => {
                         </TabsList>
                         <TabsContent value="overview">
                             {/* each tab content can be independent component */}
-                            <>
-                                <h3 className=" text-2xl">Course Description</h3>
-                                <p className="mt-4">
-                                    This tutorial will help you learn quickly and thoroughly.
-                                    Lorem ipsum, or lipsum as it sometimes known, is dummy text
-                                    used in laying out print, graphic or web designs. Lorem
-                                    ipsum dolor sit amet, consectetuer adipiscing elit. Donec
-                                    odio. Quisque volutpat mattis eros.
-                                    <br /> <br /> You’ll be exposed to principles and
-                                    strategies, but, more importantly, you’ll learn how actually
-                                    apply these abstract concepts by coding three different
-                                    websites for three very different the audiences. Lorem ipsum
-                                    is dummy text used in laying out print, graphic or web
-                                    designs Lorem ipsum blinding shot chinwag knees.
-                                </p>
-                                <div className="bg-gray-50 space-y-6 p-8 rounded-md mt-8">
-                                    <h4 className="text-2xl">What You will Learn?</h4>
-                                    <ul className="grid sm:grid-cols-2 grid-cols-1 gap-6">
-                                        <li className="flex space-x-3">
-                                            <div className="flex-none relative top-1">
-                                                <CheckCheck />
-                                            </div>
-                                            <div className="flex-1">
-                                                Learn how perspective works and how to incorporate
-                                                your art
-                                            </div>
-                                        </li>
-                                        <li className="flex space-x-3">
-                                            <div className="flex-none relative top-1">
-                                                <CheckCheck />
-                                            </div>
-                                            <div className="flex-1">
-                                                Learn how perspective works and how to incorporate
-                                                your art
-                                            </div>
-                                        </li>
-                                        <li className="flex space-x-3">
-                                            <div className="flex-none relative top-1">
-                                                <CheckCheck />
-                                            </div>
-                                            <div className="flex-1">
-                                                Learn how perspective works and how to incorporate
-                                                your art
-                                            </div>
-                                        </li>
-                                        <li className="flex space-x-3">
-                                            <div className="flex-none relative top-1">
-                                                <CheckCheck />
-                                            </div>
-                                            <div className="flex-1">
-                                                Learn how perspective works and how to incorporate
-                                                your art
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </>
+                            <CourseOverview course={course}/>
                         </TabsContent>
                         <TabsContent value="curriculum">
                             {/* each tab content can be independent component */}
@@ -443,54 +390,7 @@ const CourseDetails = () => {
                         </TabsContent>
                         <TabsContent value="instructor">
                             {/* each tab content can be independent component */}
-                            <div className="bg-gray-50 rounded-md p-8">
-                                <div className="md:flex md:gap-x-5 mb-8">
-                                    <div className="h-[310px] w-[270px] max-w-full  flex-none rounded mb-5 md:mb-0">
-                                        <img
-                                            src="https://avatars.githubusercontent.com/u/3633137?v=4"
-                                            alt=""
-                                            className="w-full h-full object-cover rounded"
-                                        />
-                                    </div>
-                                    <div className="flex-1">
-                                        <div className="max-w-[300px]">
-                                            <h4 className="text-[34px] font-bold leading-[51px]">
-                                                Tapas Adhikary
-                                            </h4>
-                                            <div className="text-gray-600 font-medium mb-6">
-                                                Senior Software Engineer
-                                            </div>
-                                            <ul className="list space-y-4">
-                                                <li className="flex items-center space-x-3">
-                                                    <Presentation className="text-gray-600" />
-                                                    <div>10+ Courses</div>
-                                                </li>
-                                                <li className="flex space-x-3">
-                                                    <UsersRound className="text-gray-600" />
-                                                    <div>2k+ Student Learned</div>
-                                                </li>
-                                                <li className="flex space-x-3">
-                                                    <MessageSquare className="text-gray-600" />
-                                                    <div>1500+ Reviews</div>
-                                                </li>
-                                                <li className="flex space-x-3">
-                                                    <Star className="text-gray-600" />
-                                                    <div>4.9 Average Rating</div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p className="text-gray-600">
-                                    There are many variations of passages of Lorem Ipsum
-                                    available, but the majority have suffered alteration in some
-                                    form, by injected humour, or randomised words which do not
-                                    look even slightly believable. If you are going to use a
-                                    passage of Lorem Ipsum, you need to be sure there is not
-                                    anything embarrassing hidden in the middle of text. All the
-                                    Lorem Ipsum generators on the Internet tend.
-                                </p>
-                            </div>
+                            <CourseInstructor instructor={course?.instructor}/>
                         </TabsContent>
                     </Tabs>
                 </div>

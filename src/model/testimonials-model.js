@@ -10,10 +10,10 @@ const testimonialSchema = new Schema ({
         required: true,
     },
     courseId: {
-        type: Schema.ObjectId,
+        type: Schema.ObjectId, ref: "Course",
     },
     userId: {
-        type: Schema.ObjectId,
+        type: Schema.ObjectId, ref: "User",
     },
 })
 
