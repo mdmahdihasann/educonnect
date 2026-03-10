@@ -31,3 +31,9 @@ export async function getCoursesDetails(id) {
     .lean();
   return replaceMongoIdInObject(courseDetails);
 }
+
+export async function getCoursesDetailsByInstructor(instructorId){
+  const courses = await Course.find({instructor: instructorId}).lean();
+
+  return courses;
+}

@@ -1,7 +1,10 @@
+import { getCoursesDetailsByInstructor } from '@/queries/courses'
 import { MessageSquare, Presentation, Star, UsersRound } from 'lucide-react'
 import React from 'react'
 
-const CourseInstructor = ({instructor}) => {
+const CourseInstructor = async({instructor}) => {
+    const instructors = await getCoursesDetailsByInstructor(instructor?._id.toString());
+    
     return (
         <div className="bg-gray-50 rounded-md p-8">
             <div className="md:flex md:gap-x-5 mb-8">
