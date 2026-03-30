@@ -23,7 +23,7 @@ export function SignupForm({ role }) {
       const lastName = formData.get("last-name");
       const email = formData.get("email");
       const password = formData.get("password");
-      const userRole = (role === "student" || "instructor") ? role : "student";
+      const userRole = ((role === "student") || (role === "instructor")) ? role : "student";
 
       const response = await fetch("/api/register", {
         method: "POST",

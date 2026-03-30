@@ -19,7 +19,7 @@ const UserSchema = new Schema({
     },
     phone: {
         type: String,
-        required: true
+        required: false
     },
     role: {
         type: String,
@@ -27,7 +27,7 @@ const UserSchema = new Schema({
     },
     bio: {
         type: String,
-        required: true
+        required: false
     },
     socialMedia: {
         type: Object,
@@ -35,7 +35,7 @@ const UserSchema = new Schema({
     },
     profilePicture: {
         type: String,
-        required: true
+        required: false
     },
 })
 
