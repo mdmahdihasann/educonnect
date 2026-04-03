@@ -8,7 +8,6 @@ const SingleCoursePage = async (props) => {
   const params = await props.params;
   const id = params.id;
   const course = await getCoursesDetails(id);
-  console.log(course);
 
   return (
     <>

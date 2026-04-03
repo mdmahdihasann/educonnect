@@ -5,6 +5,7 @@ import { Course } from "@/model/course-model";
 import { Module } from "@/model/modules-model";
 import { Testimonial } from "@/model/testimonials-model";
 import { User } from "@/model/user-model";
+import { getEnrollmentsForCourse } from "./enrollments";
 
 export async function getCoursesList() {
   const courses = await Course.find({})
@@ -32,8 +33,36 @@ export async function getCoursesDetails(id) {
   return replaceMongoIdInObject(courseDetails);
 }
 
-export async function getCoursesDetailsByInstructor(instructorId){
-  const courses = await Course.find({instructor: instructorId}).lean();
+export async function getCoursesDetailsByInstructor(instructorId) {
+  const courses = await Course.find({ instructor: instructorId }).lean();
+  const enrollments = await Promise.all(
+    courses.map(async (course) => {
+      const enrollment = await getEnrollmentsForCourse(course._id.toString());
+      return enrollment;
+    })
+  )
+
+  console.log(enrollments);
+  console.log(courses);
+
+
+  const totalEnrollments = enrollments.reduce((item, currentValue) => {
+    return item.length + currentValue.length;
+  });
+
+
 
   return courses;
+}
+
+
+export async function create(courseData) {
+  try {
+    const course = await Course.create(courseData);
+    return JSON.parse(JSON.stringify(course));
+  } catch (error) {
+    console.log(error);
+    
+    throw new Error(error);
+  }
 }

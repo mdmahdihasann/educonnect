@@ -7,7 +7,6 @@ const courseSchema = new Schema({
     },
     description: {
         type: String,
-        required: true,
     },
     thumbnail: {
         type: String,
@@ -21,10 +20,12 @@ const courseSchema = new Schema({
     ],
     price: {
         type: Number,
+        default: 0,
         required: true,
     },
     active: {
         type: Boolean,
+        default: false,
         required: true,
     },
     category: {
@@ -41,15 +42,16 @@ const courseSchema = new Schema({
         }
     ],
     learning: {
-        required: true,
         type: [String]
     },
     createdOn: {
         required: true,
+        default: Date.now(),
         type: Date
     },
     modifiedOn: {
         required: true,
+        default: Date.now(),
         type: Date
     }
 });

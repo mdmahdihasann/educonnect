@@ -4,6 +4,8 @@ import React from 'react'
 
 const CourseInstructor = async({instructor}) => {
     const instructors = await getCoursesDetailsByInstructor(instructor?._id.toString());
+    console.log(instructors);
+    
     
     return (
         <div className="bg-gray-50 rounded-md p-8">
