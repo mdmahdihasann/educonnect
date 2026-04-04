@@ -26,6 +26,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { createCourse } from "@/app/actions/course";
+
 const formSchema = z.object({
   title: z.string().min(1, {
     message: "Title is required!",
