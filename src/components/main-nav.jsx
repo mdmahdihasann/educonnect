@@ -8,7 +8,6 @@ import { MobileNav } from "@/components/mobile-nav";
 import lwsLogo from "@/assets/lws_logo.svg";
 import Image from "next/image";
 import { X } from "lucide-react";
-import { Command } from "lucide-react";
 import { Button, buttonVariants } from "./ui/button";
 import { Menu } from "lucide-react";
 import {
@@ -82,34 +81,36 @@ export function MainNav({ items, children }) {
 						</div>
 					)
 				}
+				{
+					loginSession && <DropdownMenu>
+						<DropdownMenuTrigger asChild>
+							<div className="cursor-pointer">
+								<Avatar>
+									<AvatarImage
+										src="https://github.com/shadcn.png"
+										alt="@shadcn"
+									/>
+									<AvatarFallback>CN</AvatarFallback>
+								</Avatar>
+							</div>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent align="end" className="w-56 mt-4">
+							<DropdownMenuItem className="cursor-pointer" asChild>
+								<Link href="/account">Profile</Link>
+							</DropdownMenuItem>
+							<DropdownMenuItem className="cursor-pointer" asChild>
+								<Link href="account/enrolled-courses">My Courses</Link>
+							</DropdownMenuItem>
+							<DropdownMenuItem className="cursor-pointer" asChild>
+								<Link href="">Testimonials & Certificates</Link>
+							</DropdownMenuItem>
+							<DropdownMenuItem className="cursor-pointer" asChild>
+								<Link href="#" onClick={() => signOut()}>Logout</Link>
+							</DropdownMenuItem>
+						</DropdownMenuContent>
+					</DropdownMenu>
+				}
 
-				<DropdownMenu>
-					<DropdownMenuTrigger asChild>
-						<div className="cursor-pointer">
-							<Avatar>
-								<AvatarImage
-									src="https://github.com/shadcn.png"
-									alt="@shadcn"
-								/>
-								<AvatarFallback>CN</AvatarFallback>
-							</Avatar>
-						</div>
-					</DropdownMenuTrigger>
-					<DropdownMenuContent align="end" className="w-56 mt-4">
-						<DropdownMenuItem className="cursor-pointer" asChild>
-							<Link href="/account">Profile</Link>
-						</DropdownMenuItem>
-						<DropdownMenuItem className="cursor-pointer" asChild>
-							<Link href="account/enrolled-courses">My Courses</Link>
-						</DropdownMenuItem>
-						<DropdownMenuItem className="cursor-pointer" asChild>
-							<Link href="">Testimonials & Certificates</Link>
-						</DropdownMenuItem>
-						<DropdownMenuItem className="cursor-pointer" asChild>
-							<Link href="#" onClick={() => signOut()}>Logout</Link>
-						</DropdownMenuItem>
-					</DropdownMenuContent>
-				</DropdownMenu>
 				<button
 					className="flex items-center space-x-2 lg:hidden"
 					onClick={() => setShowMobileMenu(!showMobileMenu)}>

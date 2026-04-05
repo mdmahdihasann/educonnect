@@ -1,17 +1,28 @@
-import { LOGIN, PUBLIC_ROUTES, ROOT } from "@/lib/route";
-import { auth } from "./auth"
 
-export default auth((req)=>{
-    const {nextUrl} =  req;
-    const isAuthenticated = !!req.auth;
+import NextAuth from "next-auth";
+import { authConfig } from "./auth.config";
 
-    const isPublicRoute = (PUBLIC_ROUTES.find(route=> nextUrl.pathname.startsWith(route)) || nextUrl.pathname === ROOT);
+import {PUBLIC_ROUTES, LOGIN, ROOT} from "@/lib/route";
 
-    if(!isAuthenticated && !isPublicRoute){
-        return Response.redirect(new URL(LOGIN, nextUrl))
-    }
-})
+const { auth } = NextAuth(authConfig);
 
-export const config = {
-    matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
-}
+export default auth((req) => {
+  const { nextUrl } = req;
+
+  const isAuthenticated = !!req.auth;
+
+  console.log(isAuthenticated, nextUrl.pathname);
+
+  const isPublicRoute = (PUBLIC_ROUTES.find(route => nextUrl.pathname.startsWith(route))
+   || nextUrl.pathname === ROOT);
+
+  console.log({isPublicRoute});
+
+  if (!isAuthenticated && !isPublicRoute)
+    return Response.redirect(new URL(LOGIN, nextUrl));
+
+ });
+
+ export const config = {
+  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+ };
