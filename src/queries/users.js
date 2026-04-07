@@ -1,0 +1,13 @@
+import { cleanMongoData, replaceMongoIdInObject } from "@/lib/convertData";
+import { User } from "@/model/user-model";
+
+export async function getUserByEmail(email) {
+    const user = await User.findOne({ email: email }).select("-password").lean();
+    return replaceMongoIdInObject(user)
+}
+
+export async function loginUser() {
+    const loginUser = await User.find().lean();
+    const cleanUser = JSON.parse(JSON.stringify(loginUser));
+    return cleanUser;
+}

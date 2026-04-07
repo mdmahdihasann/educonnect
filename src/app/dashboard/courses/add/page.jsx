@@ -26,6 +26,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { createCourse } from "@/app/actions/course";
+import { loginUser } from "@/queries/users";
 
 const formSchema = z.object({
   title: z.string().min(1, {
@@ -50,8 +51,11 @@ const AddCourse = () => {
   const { isSubmitting, isValid } = form.formState;
 
   const onSubmit = async (values) => {
+    const lgUser = await loginUser();
+    console.log(lgUser);
+    
     try {
-      const course = await createCourse(values)
+      const course = await createCourse(values);
       router.push(`/dashboard/courses/${course?._id}`);
       toast.success("Course created");
     } catch (error) {

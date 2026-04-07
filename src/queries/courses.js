@@ -33,26 +33,12 @@ export async function getCoursesDetails(id) {
   return replaceMongoIdInObject(courseDetails);
 }
 
-export async function getCoursesDetailsByInstructor(instructorId) {
-  const courses = await Course.find({ instructor: instructorId }).lean();
-  const enrollments = await Promise.all(
-    courses.map(async (course) => {
-      const enrollment = await getEnrollmentsForCourse(course._id.toString());
-      return enrollment;
-    })
-  )
+export async function getCoursesDetailsByInstructor() {
+    const allCourses = await Course.find().lean();
+    return allCourses;
 
-  console.log(enrollments);
-  console.log(courses);
-
-
-  const totalEnrollments = enrollments.reduce((item, currentValue) => {
-    return item.length + currentValue.length;
-  });
-
-
-
-  return courses;
+  // const publishedCourses = await Course.find({ instructor: instructorId, active: true }).lean();
+  // return publishedCourses;
 }
 
 
@@ -62,7 +48,7 @@ export async function create(courseData) {
     return JSON.parse(JSON.stringify(course));
   } catch (error) {
     console.log(error);
-    
+
     throw new Error(error);
   }
 }

@@ -7,6 +7,7 @@ import {PUBLIC_ROUTES, LOGIN, ROOT} from "@/lib/route";
 const { auth } = NextAuth(authConfig);
 
 export default auth((req) => {
+  console.log("AUTH:", req.auth);
   const { nextUrl } = req;
 
   const isAuthenticated = !!req.auth;
