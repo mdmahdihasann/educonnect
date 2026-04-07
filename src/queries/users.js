@@ -6,8 +6,3 @@ export async function getUserByEmail(email) {
     return replaceMongoIdInObject(user)
 }
 
-export async function loginUser() {
-    const loginUser = await User.find().lean();
-    const cleanUser = JSON.parse(JSON.stringify(loginUser));
-    return cleanUser;
-}

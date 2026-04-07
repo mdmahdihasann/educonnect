@@ -5,7 +5,8 @@ import { Course } from "@/model/course-model";
 import { Module } from "@/model/modules-model";
 import { Testimonial } from "@/model/testimonials-model";
 import { User } from "@/model/user-model";
-import { getEnrollmentsForCourse } from "./enrollments";
+import { getServerSession } from "next-auth";
+import { auth } from "../../auth";
 
 export async function getCoursesList() {
   const courses = await Course.find({})
@@ -33,9 +34,9 @@ export async function getCoursesDetails(id) {
   return replaceMongoIdInObject(courseDetails);
 }
 
-export async function getCoursesDetailsByInstructor() {
-    const allCourses = await Course.find().lean();
-    return allCourses;
+export async function getCoursesDetailsByInstructor(insId) {
+    const allCourses = await Course.find({instructor: insId}).lean();
+    return JSON.parse(JSON.stringify(allCourses));
 
   // const publishedCourses = await Course.find({ instructor: instructorId, active: true }).lean();
   // return publishedCourses;

@@ -16,17 +16,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { createCourse } from "@/app/actions/course";
-import { loginUser } from "@/queries/users";
+import { useEffect, useState } from "react";
+import { getCurrentUser } from "@/app/actions/user";
 
 const formSchema = z.object({
   title: z.string().min(1, {
@@ -38,6 +32,11 @@ const formSchema = z.object({
 });
 
 const AddCourse = () => {
+  const [user, setUser] = useState(null);
+  useEffect(()=>{
+    getCurrentUser().then((data)=> setUser(data))
+  },[])
+  
   const router = useRouter();
 
   const form = useForm({
@@ -51,11 +50,10 @@ const AddCourse = () => {
   const { isSubmitting, isValid } = form.formState;
 
   const onSubmit = async (values) => {
-    const lgUser = await loginUser();
-    console.log(lgUser);
     
     try {
-      const course = await createCourse(values);
+      const courseData = {...values, instructor: user._id} 
+      const course = await createCourse(courseData);
       router.push(`/dashboard/courses/${course?._id}`);
       toast.success("Course created");
     } catch (error) {
