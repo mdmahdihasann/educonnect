@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { string } from "zod";
 
 const courseSchema = new Schema({
     title: {
@@ -29,7 +30,9 @@ const courseSchema = new Schema({
         required: true,
     },
     category: {
-        type: Schema.ObjectId, ref: "Category",
+        type: string,
+        default: "",
+        required: false,
     },
     instructor: {
         type: Schema.Types.ObjectId,

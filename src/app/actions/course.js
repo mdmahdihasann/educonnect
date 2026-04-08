@@ -1,6 +1,7 @@
 "use server"
 
-import {create} from "@/queries/courses"
+import { Course } from "@/model/course-model";
+import { create } from "@/queries/courses"
 
 export async function createCourse(data) {
     try {
@@ -10,3 +11,13 @@ export async function createCourse(data) {
         throw new Error(e)
     }
 }
+
+export async function updateCourse(id, data) {
+    try {
+        const course = await Course.findByIdAndUpdate(id, data, { new: true }).lean();
+        return JSON.parse(JSON.stringify(course));
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+ 

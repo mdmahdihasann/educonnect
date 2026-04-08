@@ -19,12 +19,14 @@ import { Pencil } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
+import { updateCourse } from "@/app/actions/course";
 
 const formSchema = z.object({
   price: z.coerce.number(),
 });
 
 export const PriceForm = ({ initialData, courseId }) => {
+  
   const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
 
@@ -41,7 +43,8 @@ export const PriceForm = ({ initialData, courseId }) => {
 
   const onSubmit = async (values) => {
     try {
-      toast.success("Course updated");
+      await updateCourse(courseId, values);
+      toast.success("Price updated");
       toggleEdit();
       router.refresh();
     } catch (error) {

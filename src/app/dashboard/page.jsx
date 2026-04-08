@@ -1,8 +1,13 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatPrice } from "@/lib/formatPrice";
+import { getCoursesDetailsByInstructor } from "@/queries/courses";
 formatPrice;
 
 const DashboardPage = async () => {
+  const allCourse = await getCoursesDetailsByInstructor();
+  const revenue = allCourse.reduce((ac, items)=> ac + items.price, 0)
+  
+  
   return (
     <div className="p-6">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
@@ -12,7 +17,7 @@ const DashboardPage = async () => {
             <CardTitle className="text-sm font-medium">Total Courses</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">15</div>
+            <div className="text-2xl font-bold">{allCourse?.length}</div>
           </CardContent>
         </Card>
         {/* total enrollments */}
@@ -32,7 +37,7 @@ const DashboardPage = async () => {
             <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{formatPrice(12000)}</div>
+            <div className="text-2xl font-bold">{formatPrice(revenue)}</div>
           </CardContent>
         </Card>
       </div>
