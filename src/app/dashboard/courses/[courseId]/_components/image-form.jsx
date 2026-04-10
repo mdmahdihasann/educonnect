@@ -26,7 +26,7 @@ export const ImageForm = ({ initialData, courseId }) => {
 
   const onSubmit = async (values) => {
     try {
-      toast.success("Course updated");
+      toast.success("Image updated");
       toggleEdit();
       router.refresh();
     } catch (error) {

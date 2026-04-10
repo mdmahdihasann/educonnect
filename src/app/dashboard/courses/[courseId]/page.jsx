@@ -43,7 +43,7 @@ const EditCourse = async({ params }) => {
               courseId={courseData?._id}
             />
             <DescriptionForm initialData={{description: courseData?.description}} courseId={courseData?._id} />
-            <ImageForm initialData={{}} courseId={courseData?._id} />
+            <ImageForm initialData={{thumbnail: courseData?.thumbnail}} courseId={courseData?._id} />
             <CategoryForm initialData={{category: courseData?.category}} courseId={courseData?._id} />
 
             <QuizSetForm initialData={{}} courseId={courseData?._id} />

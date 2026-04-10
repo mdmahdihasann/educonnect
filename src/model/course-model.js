@@ -11,6 +11,7 @@ const courseSchema = new Schema({
     },
     thumbnail: {
         type: String,
+        default: "",
         required: false,
     },
     modules: [
