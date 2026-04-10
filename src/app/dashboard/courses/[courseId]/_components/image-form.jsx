@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // import axios from "axios";
 import { ImageIcon, Pencil, PlusCircle } from "lucide-react";
@@ -11,6 +11,7 @@ import * as z from "zod";
 import { UploadDropzone } from "@/components/file-upload";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { updateCourse } from "@/app/actions/course";
 
 const formSchema = z.object({
   imageUrl: z.string().min(1, {
@@ -19,20 +20,42 @@ const formSchema = z.object({
 });
 
 export const ImageForm = ({ initialData, courseId }) => {
+  const [files, setFiles] = useState(null);
   const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
 
   const toggleEdit = () => setIsEditing((current) => !current);
+  console.log(files);
 
-  const onSubmit = async (values) => {
-    try {
-      toast.success("Image updated");
+  useEffect(() => {
+    const datas = async () => {
+      const file = files[0];
+      const formData = new FormData();
+      formData.append("file", file);
+      await updateCourse(courseId, formData);
+      console.log(formData);
+      
+      toast.success("Course updated");
       toggleEdit();
       router.refresh();
-    } catch (error) {
-      toast.error("Something went wrong");
     }
-  };
+    datas()
+  }, [files])
+
+  // const onSubmit = async (files) => {
+  //   try {
+  //     const file = files[0];
+  //     const formData = new FormData();
+  //     formData.append("file", file);
+  //     await updateCourse(courseId, formData);
+
+  //     toast.success("Course updated");
+  //     toggleEdit();
+  //     router.refresh();
+  //   } catch (error) {
+  //     toast.error("Something went wrong");
+  //   }
+  // };
 
   return (
     <div className="mt-6 border bg-gray-50 rounded-md p-4">
@@ -71,7 +94,9 @@ export const ImageForm = ({ initialData, courseId }) => {
         ))}
       {isEditing && (
         <div>
-          <UploadDropzone />
+          <UploadDropzone
+            onUpload={(files) => setFiles(files)}
+          />
           <div className="text-xs text-muted-foreground mt-4">
             16:9 aspect ratio recommended
           </div>

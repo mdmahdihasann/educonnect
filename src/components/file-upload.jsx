@@ -8,11 +8,10 @@ import { useDropzone } from "react-dropzone";
 import { toast } from "sonner";
 
 export const UploadDropzone = (props) => {
-  const { isMulti = false, label } = props;
+  const { isMulti = false, label, onUpload } = props;
 
   const [droppedFiles, setDroppedFiles] = useState(null);
 
-  console.log(droppedFiles);
 
   const [isUploading, setIsUploading] = useState(false);
 
@@ -50,6 +49,7 @@ export const UploadDropzone = (props) => {
     // });
     setUploadProgress(100);
     clearInterval(progressInterval);
+    onUpload(acceptedFiles)
   }, []);
 
   const { getRootProps, getInputProps, fileRejections } = useDropzone({
@@ -74,7 +74,7 @@ export const UploadDropzone = (props) => {
         isUploading ? "pointer-events-none !cursor-not-allowed opacity-80" : ""
       )}
     >
-      <input multiple={isMulti} {...getInputProps()} disabled={isUploading} />
+      <input multiple={isMulti} name="thumbnail" {...getInputProps()} disabled={isUploading} />
       <div className="flex flex-col items-center gap-3 text-center !text-[#858585]">
         <CloudUpload size={48} className="text-gray-600" />
         <h4 className="!font-normal  !text-[#858585]">
