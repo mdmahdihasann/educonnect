@@ -19,7 +19,7 @@ import { getCoursesEditData } from "@/queries/courses";
 const EditCourse = async({ params }) => {
   const data = await params;
   const courseData = await getCoursesEditData(data.courseId);
-  
+  const cleanThumbnail = courseData?.thumbnail?.replaceAll("./", "");
   return (
     <>
       <AlertBanner
@@ -43,7 +43,7 @@ const EditCourse = async({ params }) => {
               courseId={courseData?._id}
             />
             <DescriptionForm initialData={{description: courseData?.description}} courseId={courseData?._id} />
-            <ImageForm initialData={{thumbnail: courseData?.thumbnail}} courseId={courseData?._id} />
+            <ImageForm initialData={{imageUrl: `/assets/images/courses/${cleanThumbnail}`}} courseId={courseData?._id} />
             <CategoryForm initialData={{category: courseData?.category}} courseId={courseData?._id} />
 
             <QuizSetForm initialData={{}} courseId={courseData?._id} />

@@ -25,37 +25,34 @@ export const ImageForm = ({ initialData, courseId }) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const toggleEdit = () => setIsEditing((current) => !current);
-  console.log(files);
 
   useEffect(() => {
-    const datas = async () => {
-      const file = files[0];
-      const formData = new FormData();
-      formData.append("file", file);
-      await updateCourse(courseId, formData);
-      console.log(formData);
-      
-      toast.success("Course updated");
-      toggleEdit();
-      router.refresh();
+    const fileUpload = async () => {
+      try {
+        const file = files[0];
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("destination", "./public/assets/images/courses");
+        formData.append("courseId", courseId);
+        const response = await fetch("/api/upload", {
+          method: "POST",
+          body: formData
+        })
+        const result = await response.text();
+        if (response.status === 200) {
+          initialData.imageUrl = `/assets/images/courses/${files[0]?.path}`
+          toast.success(result);
+          toggleEdit();
+          router.refresh();
+        }
+      } catch (error) {
+        toast.error(error.message)
+      }
     }
-    datas()
+    fileUpload()
   }, [files])
 
-  // const onSubmit = async (files) => {
-  //   try {
-  //     const file = files[0];
-  //     const formData = new FormData();
-  //     formData.append("file", file);
-  //     await updateCourse(courseId, formData);
 
-  //     toast.success("Course updated");
-  //     toggleEdit();
-  //     router.refresh();
-  //   } catch (error) {
-  //     toast.error("Something went wrong");
-  //   }
-  // };
 
   return (
     <div className="mt-6 border bg-gray-50 rounded-md p-4">
